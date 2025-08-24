@@ -10,7 +10,7 @@ spec:
     targetRevision: 8.3.0
     chart: argo-cd
   destination:
-    server: in-cluster
+    name: in-cluster
     namespace: argocd
   syncPolicy:
     automated:
