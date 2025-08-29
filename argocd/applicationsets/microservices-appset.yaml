@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: microservices-appset
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/yoav7000/platform-gitops.git
+              revision: main
+              files:
+                - path: environments/*/config.yaml
+              pathParamPrefix: env
+              values:
+                env_name: "{{index .config.path.segments 1}}"
+          - git:
+              repoURL: https://github.com/yoav7000/platform-gitops.git
+              revision: main
+              files:
+                - path: services/*/chart-config.yaml
+              pathParamPrefix: app
+              values:
+                service_name: "{{index .config.path.segments 1}}"
+
+  template:
+    metadata:
+      name: '{{.values.service_name}}-{{.values.env_name}}'
+    spec:
+      project: {{.values.env_name}}
+      sources:
+        - repoURL: {{.app.chart.repoURL}}
+          targetRevision: {{.app.chart.targetRevision}}
+          path: {{.app.chart.path}}
+          helm:
+            valueFiles:
+              - $values/services/{{.app.service_name}}/values/{{.env.env_name}}.yaml
+        - repoURL: https://github.com/yoav7000/platform-gitops.git
+          targetRevision: main
+          ref: values
+      destination:
+        name: {{ .env.cluster}}
+        namespace: {{ .env.namespace}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
