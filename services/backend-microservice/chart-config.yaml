@@ -1,4 +1,4 @@
 chart:
-  repoURL: https://argoproj.github.io/argo-helm
-  targetRevision: 8.3.0
-  path: services/backend-microservice
+  repoURL: https://github.com/yoav7000/one-chart.git
+  targetRevision: main
+  path: ""
