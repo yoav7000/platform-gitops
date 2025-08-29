@@ -11,6 +11,8 @@ spec:
     repoURL: 'https://github.com/yoav7000/platform-gitops.git'
     targetRevision: HEAD
     path: argocd
+    directory:
+      recurse: true
   destination:
     name: in-cluster
     namespace: argocd
