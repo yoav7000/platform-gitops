@@ -15,15 +15,15 @@ spec:
                 - path: environments/*/config.yaml
               pathParamPrefix: env
               values:
-                env_name: "{{index .config.path.segments 1}}"
+                env_name: "{{index .env.path.segments 1}}"
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: main
               files:
                 - path: services/*/chart-config.yaml
-              # pathParamPrefix: app
+              pathParamPrefix: app
               values:
-                service_name: "{{index .config.path.segments 1}}"
+                service_name: "{{index .app.path.segments 1}}"
                 chart_url: "{{.chart.repoURL}}"
                 chart_revision: "{{.chart.targetRevision}}"
                 chart_path: "{{.chart.path}}"
