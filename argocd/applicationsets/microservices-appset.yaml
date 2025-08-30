@@ -22,12 +22,12 @@ spec:
               files:
                 - path: services/*/chart-config.yaml
               pathParamPrefix: app
-              values:
-                service_name: "{{index .path.segments 1}}"
+              # values:
+              #   service_name: "{{index .app.path.segments 1}}"
 
   template:
     metadata:
-      name: '{{.app.values.service_name}}-{{.env.values.env_name}}'
+      name: '{{index .app.path.segments 1}}-{{.env.values.env_name}}'
     spec:
       project: '{{.env.values.env_name}}'
       sources:
