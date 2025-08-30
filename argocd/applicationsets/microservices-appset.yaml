@@ -24,6 +24,9 @@ spec:
               # pathParamPrefix: app
               values:
                 service_name: "{{index .config.path.segments 1}}"
+                chart_url: "{{.chart.repoURL}}"
+                chart_revision: "{{.chart.targetRevision}}"
+                chart_path: "{{.chart.path}}"
 
   template:
     metadata:
@@ -31,7 +34,7 @@ spec:
     spec:
       project: '{{.env.values.env_name}}'
       sources:
-        - repoURL: {{.chart.repoURL}}
+        - repoURL: {{.values.chart_url}}
           targetRevision: {{.app.chart.targetRevision}}
           path: {{.chart.path}}
           helm:
