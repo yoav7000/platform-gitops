@@ -31,9 +31,9 @@ spec:
     spec:
       project: '{{.env.values.env_name}}'
       sources:
-        - repoURL: {{.app.chart.repoURL}}
+        - repoURL: {{.chart.repoURL}}
           targetRevision: {{.app.chart.targetRevision}}
-          path: {{.app.chart.path}}
+          path: {{.chart.path}}
           helm:
             valueFiles:
               - $values/services/{{.app.values.service_name}}/values/{{.env.values.env_name}}.yaml
