@@ -44,8 +44,8 @@ spec:
           targetRevision: main
           ref: values
       destination:
-        name: {{ .env.cluster }}
-        namespace: {{ .env.namespace }}
+        name: '{{ .env.cluster }}'
+        namespace: '{{ .env.namespace }}'
       syncPolicy:
         automated:
           prune: true
