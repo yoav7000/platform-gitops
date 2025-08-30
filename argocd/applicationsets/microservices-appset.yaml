@@ -18,15 +18,15 @@ spec:
                 env_name: "{{index .config.path.segments 1}}"
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
-              revision: HEAD
+              revision: main
               files:
                 - path: services/*/chart-config.yaml
               # pathParamPrefix: app
               values:
                 service_name: "{{index .config.path.segments 1}}"
-                chart_url: "{{.chart.repoURL}}"
-                chart_revision: "{{.chart.targetRevision}}"
-                chart_path: "{{.chart.path}}"
+                chart_url: "{{.config.chart.repoURL}}"
+                chart_revision: "{{.config.chart.targetRevision}}"
+                chart_path: "{{.config.chart.path}}"
 
   template:
     metadata:
@@ -34,7 +34,7 @@ spec:
     spec:
       project: '{{.env.values.env_name}}'
       sources:
-        - repoURL: {{.values.chart_url}}
+        - repoURL: {{.app.values.chart_url}}
           targetRevision: {{.app.chart.targetRevision}}
           path: {{.chart.path}}
           helm:
