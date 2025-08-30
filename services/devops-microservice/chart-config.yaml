@@ -1,4 +1,4 @@
 chart:
   repoURL: https://github.com/yoav7000/one-chart.git
   targetRevision: main
-  path: "."
+  path: .
