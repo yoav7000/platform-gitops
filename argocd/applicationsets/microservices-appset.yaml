@@ -21,7 +21,7 @@ spec:
               revision: main
               files:
                 - path: services/*/chart-config.yaml
-              pathParamPrefix: app
+              # pathParamPrefix: app
               values:
                 service_name: "{{index .config.path.segments 1}}"
 
