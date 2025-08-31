@@ -27,8 +27,8 @@ spec:
               pathParamPrefix: app
               values:
                 # service_name: "{{index .path.segments 1}}"
-                chart_url: "{{.app.chart.repoURL}}"
-                chart_revision: "{{.app.chart.targetRevision}}"
+                chart_url: "{{.chart.repoURL}}"
+                chart_revision: "{{.chart.targetRevision}}"
 
   template:
     metadata:
