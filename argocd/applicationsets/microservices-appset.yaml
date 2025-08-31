@@ -41,7 +41,7 @@ spec:
           # path: '{{.chart.path}}'
           helm:
             valueFiles:
-              - $values/services/{{.app.values.service_name}}/values/{{.env.values.env_name}}.yaml
+              - $values/services/{{.values.service_name}}/values/{{.values.env_name}}.yaml
         - repoURL: https://github.com/yoav7000/platform-gitops.git
           targetRevision: main
           ref: values
