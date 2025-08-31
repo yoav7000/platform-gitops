@@ -28,7 +28,7 @@ spec:
               values:
                 # service_name: "{{index .path.segments 1}}"
                 chart_url: "{{.chart.repoURL}}"
-                chart_revision: "{{.chart.targetRevision}}"
+                # chart_revision: "{{.chart.targetRevision}}"
 
   template:
     metadata:
