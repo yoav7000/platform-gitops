@@ -25,8 +25,8 @@ spec:
                 - path: services/*/chart-config.yaml
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
               # pathParamPrefix: app
-              values:
-                service_name: "{{index .path.segments 1}}"
+              # values:
+              #   service_name: "{{index .path.segments 1}}"
 
   template:
     metadata:
