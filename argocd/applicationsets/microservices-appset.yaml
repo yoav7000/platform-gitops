@@ -27,11 +27,12 @@ spec:
               # pathParamPrefix: app
               values:
                 # service_name: "{{index .path.segments 1}}"
-                chart_url: '{{.chart.repoURL}}'
+                # chart_url: '{{.chart.repoURL}}'
                 # chart_revision: "{{.chart.targetRevision}}"
 
   template:
     metadata:
+      debug: '{{ toJson . }}'
       name: '{{index .path.segments 1}}-{{.values.env_name}}'
     spec:
       project: '{{.values.env_name}}'
