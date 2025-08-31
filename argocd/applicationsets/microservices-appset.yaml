@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: microservices-appset
-  debug: '{{ toJson . }}'
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -28,8 +27,8 @@ spec:
               # pathParamPrefix: app
               values:
                 # service_name: "{{index .path.segments 1}}"
-                # chart_url: '{{.chart.repoURL}}'
-                # chart_revision: "{{.chart.targetRevision}}"
+                chart_url: https://github.com/yoav7000/one-chart.git #'{{.chart.repoURL}}'
+                chart_revision: main #"{{.chart.targetRevision}}"
 
   template:
     metadata:
