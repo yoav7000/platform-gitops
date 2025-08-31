@@ -36,8 +36,8 @@ spec:
     spec:
       project: '{{.values.env_name}}'
       sources:
-        - repoURL: '{{ .app.chart.repoURL }}'
-          targetRevision: '{{ .app.chart.targetRevision }}'
+        - repoURL: '{{ .chart.repoURL }}'
+          targetRevision: '{{ .chart.targetRevision }}'
           # path: '{{.chart.path}}'
           helm:
             valueFiles:
