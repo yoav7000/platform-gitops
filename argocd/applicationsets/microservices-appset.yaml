@@ -22,11 +22,10 @@ spec:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: main
               files:
-                - path: services/*/chart-config.yaml
+                - path: services/backend-microservice/chart-config.yaml
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
               # pathParamPrefix: app
               values:
-                debug: '{{ toJson . }}'
                 # service_name: "{{index .path.segments 1}}"
                 chart_url: "{{.chart.repoURL}}"
                 # chart_revision: "{{.chart.targetRevision}}"
