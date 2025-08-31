@@ -24,7 +24,7 @@ spec:
               files:
                 - path: services/*/chart-config.yaml
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
-              # pathParamPrefix: app
+              pathParamPrefix: app
               values:
                 # service_name: "{{index .path.segments 1}}"
                 chart_url: "{{.app.chart.repoURL}}"
