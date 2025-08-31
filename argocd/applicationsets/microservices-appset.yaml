@@ -42,6 +42,7 @@ spec:
           helm:
             valueFiles:
               - $values/services/{{index .app.path.segments 1}}/envs/{{.values.env_name}}/values.yaml
+            ignoreMissingValueFiles: true
         - repoURL: https://github.com/yoav7000/platform-gitops.git
           targetRevision: main
           ref: values
