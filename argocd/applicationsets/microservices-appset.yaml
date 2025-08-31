@@ -26,6 +26,7 @@ spec:
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
               # pathParamPrefix: app
               values:
+                debug: '{{ toJson . }}'
                 # service_name: "{{index .path.segments 1}}"
                 chart_url: "{{.chart.repoURL}}"
                 # chart_revision: "{{.chart.targetRevision}}"
