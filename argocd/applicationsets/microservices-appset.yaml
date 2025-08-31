@@ -32,7 +32,7 @@ spec:
     metadata:
       name: '{{index .path.segments 1}}-{{.values.env_name}}'
     spec:
-      project: '{{.env.values.env_name}}'
+      project: '{{.values.env_name}}'
       sources:
         - repoURL: '{{ .app.chart.repoURL }}'
           targetRevision: '{{.app.chart.targetRevision}}'
