@@ -38,7 +38,7 @@ spec:
       sources:
         - repoURL: '{{ .chart.repoURL }}'
           targetRevision: '{{ .chart.targetRevision }}'
-          # path: '{{.chart.path}}'
+          path: '{{.chart.path}}'
           helm:
             valueFiles:
               - $values/services/{{index .app.path.segments 1}}/values/{{.values.env_name}}.yaml
