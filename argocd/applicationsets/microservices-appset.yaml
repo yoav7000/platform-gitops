@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: microservices-appset
+  debug: '{{ toJson . }}'
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -32,7 +33,6 @@ spec:
 
   template:
     metadata:
-      debug: '{{ toJson . }}'
       name: '{{index .path.segments 1}}-{{.values.env_name}}'
     spec:
       project: '{{.values.env_name}}'
