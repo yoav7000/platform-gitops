@@ -20,7 +20,7 @@ spec:
                 cluster: "{{ .cluster }}"
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
-              revision: main
+              revision: HEAD
               files:
                 - path: services/backend-microservice/chart-config.yaml
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
