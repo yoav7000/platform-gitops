@@ -30,7 +30,7 @@ spec:
 
   template:
     metadata:
-      name: '{{.values.service_name}}-{{.values.env_name}}'
+      name: '{{index .path.segments 1}}-{{.values.env_name}}'
     spec:
       project: '{{.env.values.env_name}}'
       sources:
