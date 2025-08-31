@@ -23,6 +23,7 @@ spec:
               revision: main
               files:
                 - path: services/*/chart-config.yaml
+                #TODO: ADD EXTRA CHECK FOR FILE EXIST
               pathParamPrefix: app
               values:
                 service_name: "{{index .app.path.segments 1}}"
