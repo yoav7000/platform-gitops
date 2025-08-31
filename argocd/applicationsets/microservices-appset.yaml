@@ -17,18 +17,19 @@ spec:
               values:
                 env_name: "{{index .env.path.segments 1}}"
                 namespace: "{{ .namespace }}"
+                cluster: "{{ .cluster }}"
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: main
               files:
                 - path: services/*/chart-config.yaml
               pathParamPrefix: app
-              # values:
-              #   service_name: "{{index .app.path.segments 1}}"
+              values:
+                service_name: "{{index .app.path.segments 1}}"
 
   template:
     metadata:
-      name: '{{index .app.path.segments 1}}-{{.values.env_name}}'
+      name: '{{.values.service_name}}-{{.values.env_name}}'
     spec:
       project: '{{.env.values.env_name}}'
       sources:
@@ -42,7 +43,7 @@ spec:
           targetRevision: main
           ref: values
       destination:
-        name: '{{ .env.cluster }}'
+        name: '{{ .values.cluster }}'
         namespace: '{{ .values.namespace }}'
       syncPolicy:
         automated:
