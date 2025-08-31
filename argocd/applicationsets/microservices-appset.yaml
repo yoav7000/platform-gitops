@@ -33,6 +33,7 @@ spec:
   template:
     metadata:
       name: '{{index .path.segments 1}}-{{.values.env_name}}'
+      debug: '{{ toJson . }}'
     spec:
       project: '{{.values.env_name}}'
       sources:
