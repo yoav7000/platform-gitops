@@ -25,8 +25,10 @@ spec:
                 - path: services/*/chart-config.yaml
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
               # pathParamPrefix: app
-              # values:
-              #   service_name: "{{index .path.segments 1}}"
+              values:
+                # service_name: "{{index .path.segments 1}}"
+                chart_url: "{{.app.chart.repoURL}}"
+                chart_revision: "{{.app.chart.targetRevision}}"
 
   template:
     metadata:
@@ -34,8 +36,8 @@ spec:
     spec:
       project: '{{.values.env_name}}'
       sources:
-        - repoURL: '{{ .app.chart.repoURL }}'
-          targetRevision: '{{.app.chart.targetRevision}}'
+        - repoURL: '{{ .values.chart_url }}'
+          targetRevision: '{{.values.revision}}'
           # path: '{{.chart.path}}'
           helm:
             valueFiles:
