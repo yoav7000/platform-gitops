@@ -27,7 +27,7 @@ spec:
 
   template:
     metadata:
-      name: '{{index .app.path.segments 1}}-{{.env.values.env_name}}'
+      name: '{{index .app.path.segments 1}}-{{.values.env_name}}'
     spec:
       project: '{{.env.values.env_name}}'
       sources:
