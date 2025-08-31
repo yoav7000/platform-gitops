@@ -22,7 +22,7 @@ spec:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: HEAD
               files:
-                - path: services/backend-microservice/chart-config.yaml
+                - path: services/*/chart-config.yaml
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
               values:
                 service_name:  '{{index .app.path.segments 1}}'
