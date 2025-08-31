@@ -36,7 +36,7 @@ spec:
     spec:
       project: '{{.values.env_name}}'
       sources:
-        - repoURL: "{{ .app.chart.repoURL }}"
+        - repoURL: '{{ .app.chart.repoURL }}'
           targetRevision: '{{ .app.chart.targetRevision }}'
           # path: '{{.chart.path}}'
           helm:
