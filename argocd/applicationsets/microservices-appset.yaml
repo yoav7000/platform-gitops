@@ -15,7 +15,7 @@ spec:
                 - path: environments/*/config.yaml
               pathParamPrefix: env
               values:
-                env_name: "{{index .path.segments 1}}"
+                env_name: "{{index .env.path.segments 1}}"
                 namespace: "{{ .namespace }}"
                 cluster: "{{ .cluster }}"
           - git:
@@ -26,7 +26,7 @@ spec:
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
               pathParamPrefix: app
               values:
-                service_name: "{{ index .path.segments 1 }}"
+                service_name: "{{ index .app.path.segments 1 }}"
                 chart_url: https://github.com/yoav7000/one-chart.git #'{{.chart.repoURL}}'
                 chart_revision: main #"{{.chart.targetRevision}}"
 
