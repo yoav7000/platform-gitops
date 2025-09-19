@@ -24,15 +24,15 @@ spec:
               files:
                 - path: services/*/chart-config.yaml
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
-              # values:
-              #   service_name:  '{{index .app.path.segments 1}}'
-              #   chart_url: https://github.com/yoav7000/one-chart.git #'{{.chart.repoURL}}'
-              #   chart_revision: main #"{{.chart.targetRevision}}"
+              values:
+                service_name:  '{{index .app.path.segments 1}}'
+                chart_url: https://github.com/yoav7000/one-chart.git #'{{.chart.repoURL}}'
+                chart_revision: main #"{{.chart.targetRevision}}"
               pathParamPrefix: app
 
   template:
     metadata:
-      name: '{{index .app.path.segments 1}}-{{.values.env_name}}'
+      name: '{{.values.service_name}}-{{.values.env_name}}'
     spec:
       project: '{{.values.env_name}}'
       sources:
