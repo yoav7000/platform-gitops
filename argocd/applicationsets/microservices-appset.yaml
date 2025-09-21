@@ -21,7 +21,7 @@ spec:
 
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
-              revision: HEAD
+              revision: main
               files:
                 - path: services/** #/chart-config.yaml
                 #TODO: ADD EXTRA CHECK FOR FILE EXIST
