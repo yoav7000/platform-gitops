@@ -17,13 +17,13 @@ spec:
               values:
                 env_name: "{{index .env.path.segments 1}}"
                 namespace: "{{ .cluster.namespace }}"
-                cluster: "{{ .cluster.name }}"
+                cluster_name: "{{ .cluster.name }}"
 
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: main
               files:
-                - path: services/*/config.yaml
+                - path: services/*/chart-config.yaml
               pathParamPrefix: app
 
   template:
@@ -43,7 +43,7 @@ spec:
           targetRevision: main
           ref: values
       destination:
-        name: '{{ .values.cluster }}'
+        name: '{{ .values.cluster_name }}'
         namespace: '{{ .values.namespace }}'
       syncPolicy:
         automated:
