@@ -25,15 +25,10 @@ spec:
               files:
                 - path: services/*/config.yaml
               pathParamPrefix: app
-              values:
-                service_name: "a"
-                # env_name: "{{index .path.segments 1}}"
-                namespace: "{{ .cluster.namespace }}"
-                cluster: "{{ .cluster.name }}"
 
   template:
     metadata:
-      name: '{{.values.service_name}}-{{.values.env_name}}'
+      name: '{{index .app.path.segments 1}}-{{.values.env_name}}'
     spec:
       project: '{{.values.env_name}}'
       sources:
