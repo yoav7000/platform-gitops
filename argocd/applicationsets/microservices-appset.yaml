@@ -24,7 +24,7 @@ spec:
               revision: main
               files:
                 - path: services/*/config.yaml
-              # pathParamPrefix: env1
+              pathParamPrefix: app
               values:
                 service_name: "a"
                 env_name: "{{index .path.segments 1}}"
