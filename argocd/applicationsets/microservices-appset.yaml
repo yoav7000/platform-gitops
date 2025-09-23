@@ -33,9 +33,9 @@ spec:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: main
               files:
-                - path: services/*/*/values.yaml
+                - path: services/*/*/*/values.yaml
               values:
-                env_name: "{{index .path.segments 1}}"
+                env_name: "{{index .path.segments 2}}"
 
     # - git:
     #     repoURL: https://github.com/yoav7000/platform-gitops.git
