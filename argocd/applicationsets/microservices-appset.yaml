@@ -18,13 +18,19 @@ spec:
                 env_name: "{{index .env.path.segments 1}}"
                 namespace: "{{ .cluster.namespace }}"
                 cluster_name: "{{ .cluster.name }}"
-
+          
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: main
               files:
-                - path: services/*/chart-config.yaml
-              pathParamPrefix: app
+                - path: services/*/*/values.yaml
+
+    - git:
+        repoURL: https://github.com/yoav7000/platform-gitops.git
+        revision: main
+        files:
+          - path: services/*/chart-config.yaml
+        pathParamPrefix: app
 
     # - git:
     #     repoURL: https://github.com/yoav7000/platform-gitops.git
