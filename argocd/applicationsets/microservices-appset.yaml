@@ -26,11 +26,10 @@ spec:
                 - git:
                     repoURL: https://github.com/yoav7000/platform-gitops.git
                     revision: main
-                    pathParamPrefix: val
                     files:
                       - path: services/*/*/values.yaml
                     values:
-                      service_name: "{{index .val.path.segments 1}}"
+                      service_name: "{{index .path.segments 1}}"
 
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
