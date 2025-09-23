@@ -13,7 +13,7 @@ spec:
               revision: main
               files:
                 - path: environments/*/config.yaml
-              # pathParamPrefix: env
+              pathParamPrefix: env
               values:
                 env_name: "{{index .path.segments 1}}"
                 namespace: "{{ .namespace }}"
