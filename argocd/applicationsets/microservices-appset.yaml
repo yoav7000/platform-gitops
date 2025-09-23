@@ -6,24 +6,32 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - matrix:
+    - merge:
+        mergeKeys:
+          - service_name
+          - env_name
         generators:
-          - git:
-              repoURL: https://github.com/yoav7000/platform-gitops.git
-              revision: main
-              files:
-                - path: environments/*/config.yaml
-              pathParamPrefix: env
-              values:
-                env_name: "{{index .env.path.segments 1}}"
-                namespace: "{{ .cluster.namespace }}"
-                cluster_name: "{{ .cluster.name }}"
-          
-          - git:
-              repoURL: https://github.com/yoav7000/platform-gitops.git
-              revision: main
-              files:
-                - path: services/*/*/values.yaml
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/yoav7000/platform-gitops.git
+                    revision: main
+                    files:
+                      - path: environments/*/config.yaml
+                    pathParamPrefix: env
+                    values:
+                      env_name: "{{index .env.path.segments 1}}"
+                      namespace: "{{ .cluster.namespace }}"
+                      cluster_name: "{{ .cluster.name }}"
+                
+                - git:
+                    repoURL: https://github.com/yoav7000/platform-gitops.git
+                    revision: main
+                    pathParamPrefix: val
+                    files:
+                      - path: services/*/*/values.yaml
+                    values:
+                      service_name: "{{index .val.path.segments 1}}"
 
     - git:
         repoURL: https://github.com/yoav7000/platform-gitops.git
@@ -31,6 +39,8 @@ spec:
         files:
           - path: services/*/chart-config.yaml
         pathParamPrefix: app
+        values:
+          service_name: "{{index .app.path.segments 1}}"
 
     # - git:
     #     repoURL: https://github.com/yoav7000/platform-gitops.git
