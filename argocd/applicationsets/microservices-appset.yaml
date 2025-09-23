@@ -16,8 +16,8 @@ spec:
               pathParamPrefix: env
               values:
                 env_name: "{{index .env.path.segments 1}}"
-                namespace: "{{ .namespace }}"
-                cluster: "{{ .cluster }}"
+                namespace: "{{ .cluster.namespace }}"
+                cluster: "{{ .cluster.name }}"
 
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
