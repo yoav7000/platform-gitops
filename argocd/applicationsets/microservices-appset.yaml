@@ -24,10 +24,10 @@ spec:
               revision: main
               files:
                 - path: environments/*/config.yaml
-              pathParamPrefix: env2
+              # pathParamPrefix: env2
               values:
-                service_name: "{{ index .env2.path.segments 1 }}"
-                env_name: "{{index .env2.path.segments 1}}"
+                service_name: "{{ index .path.segments 1 }}"
+                env_name: "{{index .path.segments 1}}"
                 namespace: "{{ .namespace }}"
                 cluster: "{{ .cluster }}"
 
