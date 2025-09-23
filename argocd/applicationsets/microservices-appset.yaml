@@ -23,7 +23,7 @@ spec:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: main
               files:
-                - path: environments/*/config.yaml
+                - path: services/*/config.yaml
               # pathParamPrefix: env1
               values:
                 service_name: "a"
