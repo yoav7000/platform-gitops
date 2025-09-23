@@ -9,6 +9,7 @@ spec:
     - merge:
         mergeKeys:
           - values.service_name
+          - values.env_name
         generators:
           - matrix:
               generators:
@@ -38,6 +39,7 @@ spec:
                 - path: services/*/*/*/values.yaml
               values:
                 service_name: "{{index .app.path.segments 1}}"
+                env_name: "{{index .app.path.segments 2}}"
 
     # - git:
     #     repoURL: https://github.com/yoav7000/platform-gitops.git
