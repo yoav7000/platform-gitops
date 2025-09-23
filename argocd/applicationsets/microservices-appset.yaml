@@ -23,13 +23,12 @@ spec:
               repoURL: https://github.com/yoav7000/platform-gitops.git
               revision: main
               files:
-                - path: services/** #/chart-config.yaml
-                #TODO: ADD EXTRA CHECK FOR FILE EXIST
-              pathParamPrefix: app
+                - path: environments/*/config.yaml
+              pathParamPrefix: env
               values:
-                service_name: "{{index .app.path.segments 1}}"
-                chart_url: https://github.com/yoav7000/one-chart.git #'{{.chart.repoURL}}'
-                chart_revision: main #"{{.chart.targetRevision}}"
+                env_name: "{{index .env.path.segments 1}}"
+                namespace: "{{ .namespace }}"
+                cluster: "{{ .cluster }}"
 
   template:
     metadata:
