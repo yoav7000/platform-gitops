@@ -26,6 +26,7 @@ spec:
                 - path: environments/*/config.yaml
               pathParamPrefix: env
               values:
+                service_name: "{{ index .env.path.segments 1 }}"
                 env_name: "{{index .env.path.segments 1}}"
                 namespace: "{{ .namespace }}"
                 cluster: "{{ .cluster }}"
