@@ -19,7 +19,7 @@ spec:
                       - path: environments/*/config.yaml
                     pathParamPrefix: env
                     values:
-                      env_name: "{{index .path.segments 1}}"
+                      env_name: '{{ index .env.path.segments 1 }}'
                       namespace: "{{ .cluster.namespace }}"
                       cluster_name: "{{ .cluster.name }}"
                 - git:
@@ -29,7 +29,7 @@ spec:
                       - path: services/*/chart-config.yaml
                     pathParamPrefix: app
                     values:
-                      service_name: "{{index .path.segments 1}}"
+                      service_name: '{{ index .app.path.segments 1 }}'
 
           - git:
               repoURL: https://github.com/yoav7000/platform-gitops.git
