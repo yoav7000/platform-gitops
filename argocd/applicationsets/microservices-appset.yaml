@@ -27,9 +27,9 @@ spec:
               pathParamPrefix: app
               values:
                 service_name: "a"
-                env_name: "{{index .path.segments 1}}"
-                namespace: "{{ .namespace }}"
-                cluster: "{{ .cluster }}"
+                # env_name: "{{index .path.segments 1}}"
+                namespace: "{{ .cluster.namespace }}"
+                cluster: "{{ .cluster.name }}"
 
   template:
     metadata:

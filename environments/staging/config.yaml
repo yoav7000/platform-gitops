@@ -1,2 +1,3 @@
-cluster: in-cluster
-namespace: staging
+cluster:
+  name: in-cluster
+  namespace: staging
