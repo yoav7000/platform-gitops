@@ -26,11 +26,11 @@ spec:
                 - path: services/*/chart-config.yaml
               pathParamPrefix: app
 
-    - git:
-        repoURL: https://github.com/yoav7000/platform-gitops.git
-        revision: main
-        files:
-          - path: services/*/*/values.yaml
+    # - git:
+    #     repoURL: https://github.com/yoav7000/platform-gitops.git
+    #     revision: main
+    #     files:
+    #       - path: services/*/*/values.yaml
 
     
 
