@@ -26,7 +26,7 @@ spec:
                 - path: services/*/chart-config.yaml
               pathParamPrefix: app
               values:
-                service_name: "{{index .path.segments 1}}"
+                # service_name: "{{index .path.segments 1}}"
                 env_name: "{{index .path.segments 1}}"
                 namespace: "{{ .namespace }}"
                 cluster: "{{ .cluster }}"
