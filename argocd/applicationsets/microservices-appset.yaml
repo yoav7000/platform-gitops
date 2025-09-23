@@ -20,11 +20,10 @@ spec:
                 cluster_name: "{{ .cluster.name }}"
 
           - git:
-            repoURL: https://github.com/yoav7000/platform-gitops.git
-            revision: main
-            files:
-              - path: services/**/values.yaml
-            pathParamPrefix: val
+              repoURL: https://github.com/yoav7000/platform-gitops.git
+              revision: main
+              files:
+                - path: services/**/values.yaml
 
     - git:
         repoURL: https://github.com/yoav7000/platform-gitops.git
