@@ -8,7 +8,7 @@ spec:
   generators:
     - merge:
         mergeKeys:
-          - env_name
+          - values.env_name
         generators:
           - matrix:
               generators:
