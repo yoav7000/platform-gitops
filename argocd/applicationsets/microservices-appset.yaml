@@ -9,7 +9,6 @@ spec:
     - merge:
         mergeKeys:
           - service_name
-          - env_name
         generators:
           - matrix:
               generators:
@@ -33,14 +32,14 @@ spec:
                     values:
                       service_name: "{{index .val.path.segments 1}}"
 
-    - git:
-        repoURL: https://github.com/yoav7000/platform-gitops.git
-        revision: main
-        files:
-          - path: services/*/chart-config.yaml
-        pathParamPrefix: app
-        values:
-          service_name: "{{index .app.path.segments 1}}"
+          - git:
+              repoURL: https://github.com/yoav7000/platform-gitops.git
+              revision: main
+              files:
+                - path: services/*/chart-config.yaml
+              pathParamPrefix: app
+              values:
+                service_name: "{{index .app.path.segments 1}}"
 
     # - git:
     #     repoURL: https://github.com/yoav7000/platform-gitops.git
