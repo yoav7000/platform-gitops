@@ -14,7 +14,7 @@ spec:
         # join by env_name and service_name — only pairs present in ALL child generators will remain
         mergeKeys:
           - env_name
-          - service_name
+          - "{{.values.service_name}}"
 
         generators:
           # 1) env config files: envs/<env>/config.yaml
