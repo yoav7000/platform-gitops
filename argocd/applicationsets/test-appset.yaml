@@ -22,7 +22,7 @@ spec:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
               files:
-                - path: environments/*/config.yaml
+                - path: environments/**/config.yaml
               pathParamPrefix: env
               values:
                 # env_name from path (envs/<env>/config.yaml -> index 1)
@@ -36,7 +36,7 @@ spec:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
               files:
-                - path: services/*/chart-config.yaml
+                - path: services/**/chart-config.yaml
               pathParamPrefix: svc
               values:
                 # service_name from path (services/<service>/chart-config.yaml -> index 1)
