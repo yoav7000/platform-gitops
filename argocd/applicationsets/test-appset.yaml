@@ -13,8 +13,8 @@ spec:
     - merge:
         # join by env_name and service_name — only pairs present in ALL child generators will remain
         mergeKeys:
-          - values.env_name
-          - values.service_name
+          - env_name
+          - service_name
 
         generators:
           # 1) env config files: envs/<env>/config.yaml
