@@ -42,8 +42,8 @@ spec:
                 # service_name from path (services/<service>/chart-config.yaml -> index 1)
                 service_name: "{{ index .svc.path.segments 1 }}"
                 # example fields expected in chart-config.yaml (adjust to your keys)
-                chart:        "{{ .svc.chart }}"        # e.g. chart name or relative path
-                chartVersion: "{{ .svc.version }}"      # optional
+                chart:        "{{ .svc.chart.repoURL }}"        # e.g. chart name or relative path
+                chartVersion: "{{ .svc.chart.targetRevision }}"      # optional
 
           # 3) values files: services/<service>/env/<env>/values.yaml
           #    -> only existing files are discovered, so this enforces existence
