@@ -1,0 +1,87 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: services-by-env
+  namespace: argocd
+spec:
+  # we need go templates to compute env/service names from paths and to read parsed file keys
+  goTemplate: true
+  goTemplateOptions:
+    - "missingkey=error"
+
+  generators:
+    - merge:
+        # join by env_name and service_name — only pairs present in ALL child generators will remain
+        mergeKeys:
+          - env_name
+          - service_name
+
+        generators:
+          # 1) env config files: envs/<env>/config.yaml
+          - git:
+              repoURL: "https://github.com/yoav7000/platform-gitops.git"
+              revision: main
+              files:
+                - path: envs/*/config.yaml
+              pathParamPrefix: env
+              values:
+                # env_name from path (envs/<env>/config.yaml -> index 1)
+                env_name:  "{{ index .env.path.segments 1 }}"
+                # parsed YAML keys inside env file (expects keys `cluster:` and `namespace:`)
+                cluster:   "{{ .env.cluster }}"
+                namespace: "{{ .env.namespace }}"
+
+          # 2) service chart config: services/<service>/chart-config.yaml
+          - git:
+              repoURL: "https://github.com/yoav7000/platform-gitops.git"
+              revision: main
+              files:
+                - path: services/*/chart-config.yaml
+              pathParamPrefix: svc
+              values:
+                # service_name from path (services/<service>/chart-config.yaml -> index 1)
+                service_name: "{{ index .svc.path.segments 1 }}"
+                # example fields expected in chart-config.yaml (adjust to your keys)
+                chart:        "{{ .svc.chart }}"        # e.g. chart name or relative path
+                chartVersion: "{{ .svc.version }}"      # optional
+
+          # 3) values files: services/<service>/env/<env>/values.yaml
+          #    -> only existing files are discovered, so this enforces existence
+          - git:
+              repoURL: "https://github.com/yoav7000/platform-gitops.git"
+              revision: main
+              files:
+                - path: services/*/env/*/values.yaml
+              pathParamPrefix: vals
+              values:
+                # extract both service_name (index 1) and env_name (index 3)
+                service_name: "{{ index .vals.path.segments 1 }}"
+                env_name:     "{{ index .vals.path.segments 3 }}"
+
+  template:
+    metadata:
+      # application name: <service>-<env>
+      name: "{{ .service_name }}-{{ .env_name }}"
+    spec:
+      project: default
+      source:
+        repoURL: "https://github.com/your-org/your-repo.git"
+        targetRevision: main
+        # point to the chart directory for the service (adjust if your charts are elsewhere)
+        path: "services/{{ .service_name }}/chart"
+
+        helm:
+          # the values file is guaranteed to exist (because the vals generator found it)
+          valueFiles:
+            - "services/{{ .service_name }}/env/{{ .env_name }}/values.yaml"
+          # optional: pass chart metadata from chart-config.yaml if you want to change behavior
+          # e.g. chart repo, values overrides etc.
+          # additional fields can be templated using the keys exposed above
+
+      destination:
+        # cluster/namespace read from envs/<env>/config.yaml
+        server: "{{ .cluster }}"
+        namespace: "{{ .namespace }}"
+
+      syncPolicy:
+        automated: {}
