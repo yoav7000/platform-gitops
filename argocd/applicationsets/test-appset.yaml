@@ -22,7 +22,7 @@ spec:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
               files:
-                - path: envs/*/config.yaml
+                - path: environments/*/config.yaml
               pathParamPrefix: env
               values:
                 # env_name from path (envs/<env>/config.yaml -> index 1)
