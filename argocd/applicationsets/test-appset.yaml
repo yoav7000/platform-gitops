@@ -30,6 +30,8 @@ spec:
                 # parsed YAML keys inside env file (expects keys `cluster:` and `namespace:`)
                 cluster:   "{{ .cluster.name }}"
                 namespace: "{{ .cluster.namespace }}"
+                debug_env_segments: "{{ printf \"%v\" .env.path.segments }}"
+
 
           # 2) service chart config: services/<service>/chart-config.yaml
           - git:
