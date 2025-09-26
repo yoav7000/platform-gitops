@@ -51,7 +51,7 @@ spec:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
               files:
-                - path: services/*/env/*/values.yaml
+                - path: services/*/envs/*/values.yaml
               pathParamPrefix: vals
               values:
                 # extract both service_name (index 1) and env_name (index 3)
