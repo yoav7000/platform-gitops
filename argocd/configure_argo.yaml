@@ -10,13 +10,8 @@
 #     targetRevision: 8.5.3
 #     chart: argo-cd
 #     helm:
-#       parameters:
-#         - name: server.insecure
-#           value: true
-#         # - name: server.service.type
-#         #   value: "ClusterIP"
-#         # - name: server.service.portHttp
-#         #   value: "80"
+#       values: |
+
 #   destination:
 #     name: in-cluster
 #     namespace: argocd

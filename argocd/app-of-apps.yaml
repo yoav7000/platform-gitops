@@ -13,7 +13,7 @@ spec:
     path: argocd
     directory:
       recurse: true
-      exclude: app-of-apps.yaml
+      # exclude: app-of-apps.yaml
   destination:
     name: in-cluster
     namespace: argocd
