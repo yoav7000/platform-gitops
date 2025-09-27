@@ -26,7 +26,7 @@ spec:
               pathParamPrefix: env
               values:
                 # env_name from path (envs/<env>/config.yaml -> index 1)
-                env_name:  "{{ index .env.path.segments 1 }}"
+                env_name:  "a" #"{{ index .env.path.segments 1 }}"
                 # parsed YAML keys inside env file (expects keys `cluster:` and `namespace:`)
                 cluster:   "{{ .cluster.name }}"
                 namespace: "{{ .cluster.namespace }}"
