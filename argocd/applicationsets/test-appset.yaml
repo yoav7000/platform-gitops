@@ -27,21 +27,19 @@ spec:
                     revision: main
                     files:
                       - path: services/**/chart-config.yaml
-                    pathParamPrefix: svc
+                    pathParamPrefix: app
 
           # Go over all services that have a values.yaml file for the given environment
           - git:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
               files:
-                - path: services/{{ .svc.path.basename }}/envs/{{ .env.path.basename }}/values.yaml
+                - path: services/{{ .app.path.basename }}/envs/{{ .env.path.basename }}/values.yaml
               pathParamPrefix: vals
-              values:
-                values_file_path: services/{{ index .svc.path.segments 1 }}/envs/{{ index .env.path.segments 1 }}/values.yaml
 
   template:
     metadata:
-      name: "{{ index .svc.path.segments 1 }}-{{ .values.env_name }}"
+      name: "{{ .app.path.basename }}-{{ .values.env_name }}"
     spec:
       project: '{{.values.env_name}}'
       sources:
@@ -53,7 +51,7 @@ spec:
           path: '{{.chart.path}}'
           helm:
             valueFiles:
-              - $values/services/{{index .svc.path.segments 1}}/envs/{{.values.env_name}}/values.yaml
+              - $values/services/{{ .app.path.basename }}/envs/{{ .env.path.basename }}/values.yaml
       destination:
         name: '{{ .cluster.name }}'
         namespace: '{{ .cluster.namespace }}'
