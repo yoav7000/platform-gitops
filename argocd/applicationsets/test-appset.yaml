@@ -20,15 +20,8 @@ spec:
                       - path: environments/**/config.yaml
                     pathParamPrefix: env
                     values:
-                      # env_name from path (envs/<env>/config.yaml -> index 1)
                       env_name:  "{{ index .env.path.segments 1 }}"
-                      # parsed YAML keys inside env file (expects keys `cluster:` and `namespace:`)
-                      # cluster:   "{{ .cluster.name }}"
-                      # namespace: "{{ .cluster.namespace }}"
-                      debug_env_segments: "{{ printf \"%v\" .env.path.segments }}"
 
-
-                # 2) service chart config: services/<service>/chart-config.yaml
                 - git:
                     repoURL: "https://github.com/yoav7000/platform-gitops.git"
                     revision: main
@@ -54,18 +47,21 @@ spec:
     spec:
       project: '{{.values.env_name}}'
       sources:
+        - repoURL: https://github.com/yoav7000/platform-gitops.git
+          targetRevision: main
+          ref: values
         - repoURL: '{{ .chart.repoURL }}'
           targetRevision: '{{ .chart.targetRevision }}'
           path: '{{.chart.path}}'
           helm:
             valueFiles:
               - $values/services/{{index .svc.path.segments 1}}/envs/{{.values.env_name}}/values.yaml
-        - repoURL: https://github.com/yoav7000/platform-gitops.git
-          targetRevision: main
-          ref: values
       destination:
-        name: "{{ .cluster.name }}"
-        namespace: "{{ .cluster.namespace }}"
-
+        name: '{{ .values.cluster_name }}'
+        namespace: '{{ .values.namespace }}'
       syncPolicy:
-        automated: {}
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
