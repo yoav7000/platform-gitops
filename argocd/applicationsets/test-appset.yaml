@@ -27,16 +27,14 @@ spec:
                     revision: main
                     files:
                       - path: services/**/chart-config.yaml
-                    # pathParamPrefix: svc
-                    values:
-                      service_name: "{{ .path.basename }}"
+                    pathParamPrefix: svc
 
           # Go over all services that have a values.yaml file for the given environment
           - git:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
               files:
-                - path: services/{{ index .svc.path.segments 1 }}/envs/{{ index .env.path.segments 1 }}/values.yaml
+                - path: services/{{ .svc.path.basename }}/envs/{{ .env.path.basename }}/values.yaml
               pathParamPrefix: vals
               values:
                 values_file_path: services/{{ index .svc.path.segments 1 }}/envs/{{ index .env.path.segments 1 }}/values.yaml
