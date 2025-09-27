@@ -1,0 +1,33 @@
+
+replicaCount: 3
+
+image:
+  repository: yoav7001/devops-project
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "985d9694275a5e67edb53169da2bbc2d2a1083c5"
+
+# Existing image pull secrets names.
+imagePullSecrets: [{"name": "yoav-image-pull-secret"}]
+
+env:
+  ENVIRONMENT: "BACKEND MICROSERVICE DEV"
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  hosts:
+    - host: dev.backend.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 1
