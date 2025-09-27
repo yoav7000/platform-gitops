@@ -52,16 +52,17 @@ spec:
     metadata:
       name: "{{ index .svc.path.segments 1 }}-{{ .values.env_name }}"
     spec:
-      project: default
-      source:
-        repoURL: "{{.chart.repoURL}}"
-        targetRevision: "{{.chart.targetRevision}}"
-        path: "{{.chart.path}}"
-
-        helm:
-          valueFiles:
-            - "services/{{ index .svc.path.segments 1 }}/envs/{{ .values.env_name }}/values.yaml"
-
+      project: '{{.values.env_name}}'
+      sources:
+        - repoURL: '{{ .chart.repoURL }}'
+          targetRevision: '{{ .chart.targetRevision }}'
+          path: '{{.chart.path}}'
+          helm:
+            valueFiles:
+              - $values/services/{{index .svc.path.segments 1}}/envs/{{.values.env_name}}/values.yaml
+        - repoURL: https://github.com/yoav7000/platform-gitops.git
+          targetRevision: main
+          ref: values
       destination:
         name: "{{ .cluster.name }}"
         namespace: "{{ .cluster.namespace }}"
