@@ -35,7 +35,6 @@ spec:
               revision: main
               files:
                 - path: services/{{ .app.path.basename }}/envs/{{ .env.path.basename }}/values.yaml
-              pathParamPrefix: vals
 
   template:
     metadata:
