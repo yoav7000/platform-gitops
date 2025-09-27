@@ -2,72 +2,58 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: microservices-appset
+  namespace: argocd
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    - merge:
-        mergeKeys:
-          - values.service_name
-          - values.env_name
+    - matrix:
         generators:
           - matrix:
               generators:
+                # Go over all environmets that have a config.yaml file
                 - git:
-                    repoURL: https://github.com/yoav7000/platform-gitops.git
+                    repoURL: "https://github.com/yoav7000/platform-gitops.git"
                     revision: main
                     files:
-                      - path: environments/*/config.yaml
+                      - path: environments/**/config.yaml
                     pathParamPrefix: env
                     values:
-                      env_name: '{{ index .env.path.segments 1 }}'
-                      namespace: "{{ .cluster.namespace }}"
-                      cluster_name: "{{ .cluster.name }}"
+                      env_name:  "{{ index .env.path.segments 1 }}"
+
+                # Go over all services that have a chart-config.yaml file
                 - git:
-                    repoURL: https://github.com/yoav7000/platform-gitops.git
+                    repoURL: "https://github.com/yoav7000/platform-gitops.git"
                     revision: main
                     files:
-                      - path: services/*/chart-config.yaml
+                      - path: services/**/chart-config.yaml
                     pathParamPrefix: app
-                    values:
-                      service_name: '{{ index .app.path.segments 1 }}'
 
+          # Go over all services that have a values.yaml file for the given environment
           - git:
-              repoURL: https://github.com/yoav7000/platform-gitops.git
+              repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
               files:
-                - path: services/*/*/*/values.yaml
-              values:
-                service_name: "{{index .app.path.segments 1}}"
-                env_name: "{{index .app.path.segments 3}}"
-
-    # - git:
-    #     repoURL: https://github.com/yoav7000/platform-gitops.git
-    #     revision: main
-    #     files:
-    #       - path: services/*/*/values.yaml
-
-    
+                - path: services/{{ .app.path.basename }}/envs/{{ .env.path.basename }}/values.yaml
 
   template:
     metadata:
-      name: '{{index .app.path.segments 1}}-{{.values.env_name}}'
+      name: "{{ .app.path.basename }}-{{ .values.env_name }}"
     spec:
       project: '{{.values.env_name}}'
       sources:
+        - repoURL: https://github.com/yoav7000/platform-gitops.git
+          targetRevision: main
+          ref: values
         - repoURL: '{{ .chart.repoURL }}'
           targetRevision: '{{ .chart.targetRevision }}'
           path: '{{.chart.path}}'
           helm:
             valueFiles:
-              - $values/services/{{index .app.path.segments 1}}/envs/{{.values.env_name}}/values.yaml
-            ignoreMissingValueFiles: true
-        - repoURL: https://github.com/yoav7000/platform-gitops.git
-          targetRevision: main
-          ref: values
+              - $values/services/{{ .app.path.basename }}/envs/{{ .env.path.basename }}/values.yaml
       destination:
-        name: '{{ .values.cluster_name }}'
-        namespace: '{{ .values.namespace }}'
+        name: '{{ .cluster.name }}'
+        namespace: '{{ .cluster.namespace }}'
       syncPolicy:
         automated:
           prune: true
