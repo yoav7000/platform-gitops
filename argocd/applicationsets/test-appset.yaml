@@ -58,7 +58,7 @@ spec:
               values:
                 # extract both service_name (index 1) and env_name (index 3)
                 service_name: "{{ index .vals.path.segments 1 }}"
-                env_name:     "{{ index .vals.path.segments 3 }}"
+                env_name: "b" #"{{ index .vals.path.segments 3 }}"
 
   template:
     metadata:
