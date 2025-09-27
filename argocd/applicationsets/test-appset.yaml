@@ -27,7 +27,7 @@ spec:
                     revision: main
                     files:
                       - path: services/**/chart-config.yaml
-                    pathParamPrefix: svc
+                    # pathParamPrefix: svc
                     values:
                       service_name: "{{ .path.basename }}"
 
