@@ -28,6 +28,8 @@ spec:
                     files:
                       - path: services/**/chart-config.yaml
                     pathParamPrefix: svc
+                    values:
+                      service_name: "{{ index .svc.path.segments 1 }}"
                     # values:
                     #   # service_name from path (services/<service>/chart-config.yaml -> index 1)
                     #   # service_name: "{{ index .svc.path.segments 1 }}"
@@ -40,6 +42,8 @@ spec:
               files:
                 - path: services/{{ index .svc.path.segments 1 }}/envs/{{ index .env.path.segments 1 }}/values.yaml
               pathParamPrefix: vals
+              values:
+                values_file_path: services/{{ index .svc.path.segments 1 }}/envs/{{ index .env.path.segments 1 }}/values.yaml
 
   template:
     metadata:
