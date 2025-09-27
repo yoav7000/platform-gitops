@@ -35,12 +35,12 @@ spec:
                     files:
                       - path: services/**/chart-config.yaml
                     pathParamPrefix: svc
-                    values:
-                      # service_name from path (services/<service>/chart-config.yaml -> index 1)
-                      # service_name: "{{ index .svc.path.segments 1 }}"
-                      # example fields expected in chart-config.yaml (adjust to your keys)
-                      chart:        "{{ .svc.chart.repoURL }}"        # e.g. chart name or relative path
-                      chartVersion: "{{ .svc.chart.targetRevision }}"      # optional
+                    # values:
+                    #   # service_name from path (services/<service>/chart-config.yaml -> index 1)
+                    #   # service_name: "{{ index .svc.path.segments 1 }}"
+                    #   # example fields expected in chart-config.yaml (adjust to your keys)
+                    #   chart:        "{{ .svc.chart.repoURL }}"        # e.g. chart name or relative path
+                    #   chartVersion: "{{ .svc.chart.targetRevision }}"      # optional
           - git:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
