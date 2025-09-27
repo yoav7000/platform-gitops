@@ -63,8 +63,7 @@ spec:
             - "services/{{ index .svc.path.segments 1 }}/envs/{{ .values.env_name }}/values.yaml"
 
       destination:
-        # cluster/namespace read from envs/<env>/config.yaml
-        server: "{{ .cluster.name }}"
+        name: "{{ .cluster.name }}"
         namespace: "{{ .cluster.namespace }}"
 
       syncPolicy:
