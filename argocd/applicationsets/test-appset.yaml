@@ -29,7 +29,7 @@ spec:
                       - path: services/**/chart-config.yaml
                     pathParamPrefix: svc
                     values:
-                      service_name: "{{ .svc.path.basename }}"
+                      service_name: "{{ .path.basename }}"
 
           # Go over all services that have a values.yaml file for the given environment
           - git:
