@@ -50,28 +50,22 @@ spec:
 
   template:
     metadata:
-      # application name: <service>-<env>
-      name: "{{ .service_name }}-{{ .env_name }}"
+      name: "{{ index .svc.path.segments 1 }}-{{ .values.env_name }}"
     spec:
       project: default
       source:
-        repoURL: "https://github.com/your-org/your-repo.git"
-        targetRevision: main
-        # point to the chart directory for the service (adjust if your charts are elsewhere)
-        path: "services/{{ .service_name }}/chart"
+        repoURL: "{{.chart.repoURL}}"
+        targetRevision: "{{.chart.targetRevision}}"
+        path: "{{.chart.path}}"
 
         helm:
-          # the values file is guaranteed to exist (because the vals generator found it)
           valueFiles:
-            - "services/{{ .service_name }}/env/{{ .env_name }}/values.yaml"
-          # optional: pass chart metadata from chart-config.yaml if you want to change behavior
-          # e.g. chart repo, values overrides etc.
-          # additional fields can be templated using the keys exposed above
+            - "services/{{ index .svc.path.segments 1 }}/envs/{{ .values.env_name }}/values.yaml"
 
       destination:
         # cluster/namespace read from envs/<env>/config.yaml
-        server: "{{ .cluster }}"
-        namespace: "{{ .namespace }}"
+        server: "{{ .cluster.name }}"
+        namespace: "{{ .cluster.namespace }}"
 
       syncPolicy:
         automated: {}
