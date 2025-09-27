@@ -11,47 +11,46 @@ spec:
   generators:
     - matrix:
         generators:
+          - matrix:
+              generators:
+                - git:
+                    repoURL: "https://github.com/yoav7000/platform-gitops.git"
+                    revision: main
+                    files:
+                      - path: environments/**/config.yaml
+                    pathParamPrefix: env
+                    values:
+                      # env_name from path (envs/<env>/config.yaml -> index 1)
+                      env_name:  "{{ index .env.path.segments 1 }}"
+                      # parsed YAML keys inside env file (expects keys `cluster:` and `namespace:`)
+                      # cluster:   "{{ .cluster.name }}"
+                      # namespace: "{{ .cluster.namespace }}"
+                      debug_env_segments: "{{ printf \"%v\" .env.path.segments }}"
+
+
+                # 2) service chart config: services/<service>/chart-config.yaml
+                - git:
+                    repoURL: "https://github.com/yoav7000/platform-gitops.git"
+                    revision: main
+                    files:
+                      - path: services/**/chart-config.yaml
+                    pathParamPrefix: svc
+                    values:
+                      # service_name from path (services/<service>/chart-config.yaml -> index 1)
+                      service_name: "{{ index .svc.path.segments 1 }}"
+                      # example fields expected in chart-config.yaml (adjust to your keys)
+                      chart:        "{{ .chart.repoURL }}"        # e.g. chart name or relative path
+                      chartVersion: "{{ .chart.targetRevision }}"      # optional
           - git:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
               files:
-                - path: environments/**/config.yaml
-              pathParamPrefix: env
+                - path: services/**/values.yaml
+              pathParamPrefix: vals
               values:
-                # env_name from path (envs/<env>/config.yaml -> index 1)
-                env_name:  "{{ index .env.path.segments 1 }}"
-                # parsed YAML keys inside env file (expects keys `cluster:` and `namespace:`)
-                # cluster:   "{{ .cluster.name }}"
-                # namespace: "{{ .cluster.namespace }}"
-                debug_env_segments: "{{ printf \"%v\" .env.path.segments }}"
-
-
-          # 2) service chart config: services/<service>/chart-config.yaml
-          - git:
-              repoURL: "https://github.com/yoav7000/platform-gitops.git"
-              revision: main
-              files:
-                - path: services/**/chart-config.yaml
-              pathParamPrefix: svc
-              values:
-                # service_name from path (services/<service>/chart-config.yaml -> index 1)
-                service_name: "{{ index .svc.path.segments 1 }}"
-                # example fields expected in chart-config.yaml (adjust to your keys)
-                chart:        "{{ .chart.repoURL }}"        # e.g. chart name or relative path
-                chartVersion: "{{ .chart.targetRevision }}"      # optional
-
-          # # 3) values files: services/<service>/env/<env>/values.yaml
-          # #    -> only existing files are discovered, so this enforces existence
-          # - git:
-          #     repoURL: "https://github.com/yoav7000/platform-gitops.git"
-          #     revision: main
-          #     files:
-          #       - path: services/**/values.yaml
-          #     pathParamPrefix: vals
-          #     values:
-          #       # extract both service_name (index 1) and env_name (index 3)
-          #       service_name: "{{ index .vals.path.segments 1 }}"
-          #       env_name: "b" #"{{ index .vals.path.segments 3 }}"
+                # extract both service_name (index 1) and env_name (index 3)
+                service_name: "{{ index .vals.path.segments 1 }}"
+                env_name: "b" #"{{ index .vals.path.segments 3 }}"
 
   template:
     metadata:
