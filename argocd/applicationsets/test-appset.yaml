@@ -40,18 +40,18 @@ spec:
                 chart:        "{{ .chart.repoURL }}"        # e.g. chart name or relative path
                 chartVersion: "{{ .chart.targetRevision }}"      # optional
 
-          # 3) values files: services/<service>/env/<env>/values.yaml
-          #    -> only existing files are discovered, so this enforces existence
-          - git:
-              repoURL: "https://github.com/yoav7000/platform-gitops.git"
-              revision: main
-              files:
-                - path: services/**/values.yaml
-              pathParamPrefix: vals
-              values:
-                # extract both service_name (index 1) and env_name (index 3)
-                service_name: "{{ index .vals.path.segments 1 }}"
-                env_name: "b" #"{{ index .vals.path.segments 3 }}"
+          # # 3) values files: services/<service>/env/<env>/values.yaml
+          # #    -> only existing files are discovered, so this enforces existence
+          # - git:
+          #     repoURL: "https://github.com/yoav7000/platform-gitops.git"
+          #     revision: main
+          #     files:
+          #       - path: services/**/values.yaml
+          #     pathParamPrefix: vals
+          #     values:
+          #       # extract both service_name (index 1) and env_name (index 3)
+          #       service_name: "{{ index .vals.path.segments 1 }}"
+          #       env_name: "b" #"{{ index .vals.path.segments 3 }}"
 
   template:
     metadata:
