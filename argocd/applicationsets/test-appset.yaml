@@ -11,6 +11,7 @@ spec:
         generators:
           - matrix:
               generators:
+                # Go over all environmets that have a config.yaml file
                 - git:
                     repoURL: "https://github.com/yoav7000/platform-gitops.git"
                     revision: main
@@ -20,6 +21,7 @@ spec:
                     values:
                       env_name:  "{{ index .env.path.segments 1 }}"
 
+                # Go over all services that have a chart-config.yaml file
                 - git:
                     repoURL: "https://github.com/yoav7000/platform-gitops.git"
                     revision: main
@@ -27,13 +29,9 @@ spec:
                       - path: services/**/chart-config.yaml
                     pathParamPrefix: svc
                     values:
-                      service_name: "{{ index .svc.path.segments 1 }}"
-                    # values:
-                    #   # service_name from path (services/<service>/chart-config.yaml -> index 1)
-                    #   # service_name: "{{ index .svc.path.segments 1 }}"
-                    #   # example fields expected in chart-config.yaml (adjust to your keys)
-                    #   chart:        "{{ .svc.chart.repoURL }}"        # e.g. chart name or relative path
-                    #   chartVersion: "{{ .svc.chart.targetRevision }}"      # optional
+                      service_name: "{{ .svc.path.basename }}"
+
+          # Go over all services that have a values.yaml file for the given environment
           - git:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
