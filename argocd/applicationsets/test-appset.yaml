@@ -4,20 +4,13 @@ metadata:
   name: services-by-env
   namespace: argocd
 spec:
-  # we need go templates to compute env/service names from paths and to read parsed file keys
   goTemplate: true
   goTemplateOptions:
     - "missingkey=error"
 
   generators:
-    - merge:
-        # join by env_name and service_name — only pairs present in ALL child generators will remain
-        mergeKeys:
-          - values.env_name
-          - values.service_name
-
+    - matrix:
         generators:
-          # 1) env config files: envs/<env>/config.yaml
           - git:
               repoURL: "https://github.com/yoav7000/platform-gitops.git"
               revision: main
@@ -26,7 +19,7 @@ spec:
               pathParamPrefix: env
               values:
                 # env_name from path (envs/<env>/config.yaml -> index 1)
-                env_name:  "a" #"{{ index .env.path.segments 1 }}"
+                env_name:  "{{ index .env.path.segments 1 }}"
                 # parsed YAML keys inside env file (expects keys `cluster:` and `namespace:`)
                 cluster:   "{{ .cluster.name }}"
                 namespace: "{{ .cluster.namespace }}"
