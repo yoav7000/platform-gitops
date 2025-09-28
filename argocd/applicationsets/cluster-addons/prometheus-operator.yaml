@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prometheus-operator
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - clusters: {}
+  template:
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-wave: "-1"   # to make sure it runs before services
+      name: 'prometheus-operator-{{ .name }}'
+    spec:
+      project: clusters-infrastructure
+      destination:
+        server: '{{ .server }}'
+        namespace: monitoring
+      source:
+        repoURL: https://prometheus-community.github.io/helm-charts
+        chart: prometheus-operator-crds
+        targetRevision: 13.0.0
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
