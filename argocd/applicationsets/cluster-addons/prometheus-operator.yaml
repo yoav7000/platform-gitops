@@ -14,7 +14,7 @@ spec:
         argocd.argoproj.io/sync-wave: "-1"   # to make sure it runs before services
       name: 'prometheus-operator-{{ .name }}'
     spec:
-      project: clusters-infrastructure
+      project: cluster-addons
       destination:
         server: '{{ .server }}'
         namespace: monitoring
