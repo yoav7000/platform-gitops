@@ -1,4 +1,4 @@
-# ArgoCD GitOps Project
+# Platform GitOps
 
 This GitOps repository is designed to manage the deployment of applications and services across multiple environments and clusters using ArgoCD and Helm charts. The repository is structured to ensure scalability, flexibility, and ease of management.
 
