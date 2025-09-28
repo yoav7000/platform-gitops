@@ -10,9 +10,10 @@ spec:
     targetRevision: 8.5.3
     chart: argo-cd
     helm:
-      parameters:
-      - name: server.extraArgs
-        value: --insecure
+      valuesObject:
+        server:
+          extraArgs:
+            - --insecure
 
   destination:
     name: in-cluster
