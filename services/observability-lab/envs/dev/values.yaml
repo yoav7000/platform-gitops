@@ -1,23 +1,18 @@
 
 replicaCount: 3
-
 image:
   repository: yoav7001/observability-lab
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "985d9694275a5e67edb53169da2bbc2d2a1083c5"
-
+  tag: "cb8d137bff7b53827d059d01dfcaa7b51be708f6"
 # Existing image pull secrets names.
 imagePullSecrets: [{"name": "yoav-image-pull-secret"}]
-
 env:
   ENVIRONMENT: "observability lab dev"
-
 service:
   type: ClusterIP
   port: 80
   targetPort: 8080
-
 ingress:
   enabled: true
   hosts:
@@ -25,7 +20,6 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-
 autoscaling:
   enabled: true
   minReplicas: 1
