@@ -20,9 +20,30 @@ spec:
         namespace: monitoring
       source:
         repoURL: https://prometheus-community.github.io/helm-charts
-        chart: prometheus-operator-crds
-        targetRevision: 13.0.0
+        chart: kube-prometheus-stack
+        targetRevision: 77.13.0
+        helm:
+          values: |
+            # Install the operator, but disable the default managed components
+            prometheusOperator:
+              enabled: true
+            # Disable the Prometheus instances that the chart would create
+            prometheus:
+              enabled: false
+            # Disable Alertmanager
+            alertmanager:
+              enabled: false
+            # Disable Grafana
+            grafana:
+              enabled: false
+            # Disable exporters / extra components
+            kubeStateMetrics:
+              enabled: false
+            nodeExporter:
+              enabled: false
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
