@@ -1,4 +1,3 @@
 cluster:
   name: in-cluster
   namespace: dev
-#TODO: CHANGE TO ENV AND UNDER THAT ADD VALUES, LIKE IN CHART CONFIG
