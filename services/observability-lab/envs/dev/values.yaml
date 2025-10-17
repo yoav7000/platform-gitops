@@ -31,3 +31,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 1
+
+serviceMonitor:
+  enabled: true
+  
