@@ -28,5 +28,8 @@ autoscaling:
 
 serviceMonitor:
   enabled: true
-  endpoints:
-    - port: test
+  namespaceSelector:
+    matchNames:
+      - monitoring
+      - dev
+      - alpha
