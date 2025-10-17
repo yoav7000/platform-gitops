@@ -28,5 +28,3 @@ autoscaling:
 
 serviceMonitor:
   enabled: true
-  namespaceSelector:
-    any: true
