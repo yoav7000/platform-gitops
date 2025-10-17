@@ -28,4 +28,6 @@ autoscaling:
 
 serviceMonitor:
   enabled: true
-  
+  endpoints:
+    - port: metrics
+      interval: 15s 
