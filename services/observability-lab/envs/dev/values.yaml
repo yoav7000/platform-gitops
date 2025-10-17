@@ -29,7 +29,4 @@ autoscaling:
 serviceMonitor:
   enabled: true
   namespaceSelector:
-    matchNames:
-      - monitoring
-      - dev
-      - alpha
+    any: true
