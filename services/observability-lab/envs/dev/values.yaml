@@ -21,7 +21,6 @@ keda:
     - type: prometheus
       metadata:
         serverAddress: http://prometheus-operated.monitoring.svc.cluster.local:9090
-        metricName: http_requests_total
         threshold: '10'
         query: sum(rate(http_requests_total{service="observability-lab-dev-one-chart"}[2m]))
 
