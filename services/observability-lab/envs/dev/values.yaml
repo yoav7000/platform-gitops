@@ -1,5 +1,4 @@
 
-replicaCount: 3
 image:
   repository: yoav7001/observability-lab
   pullPolicy: IfNotPresent
@@ -17,6 +16,9 @@ service:
 
 keda:
   enabled: true
+  maxReplicaCount: 5
+  pollingInterval: 30
+  cooldownPeriod: 60
   triggers:
     - type: prometheus
       metadata:
