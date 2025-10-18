@@ -20,11 +20,6 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-autoscaling:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 1
 
 serviceMonitor:
   enabled: true
