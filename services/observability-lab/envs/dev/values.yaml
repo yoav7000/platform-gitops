@@ -9,10 +9,25 @@ image:
 imagePullSecrets: [{"name": "yoav-image-pull-secret"}]
 env:
   ENVIRONMENT: "observability lab dev"
+
 service:
   type: ClusterIP
   port: 80
   targetPort: 8080
+
+keda:
+  enabled: true
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        metricName: http_requests_total
+        threshold: '10'
+        query: sum(rate(http_requests_total{service="observability-lab-dev-one-chart"}[2m]))
+
+serviceMonitor:
+  enabled: true
+
 ingress:
   enabled: true
   hosts:
@@ -20,6 +35,3 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-
-serviceMonitor:
-  enabled: true
