@@ -19,7 +19,7 @@ spec:
         server: '{{ .server }}'
         namespace: monitoring
       source:
-        repoURL: oci://ghcr.io/grafana/helm-charts
+        repoURL: https://grafana.github.io/helm-charts
         chart: grafana-operator
         targetRevision: v5.20.0
         helm:
