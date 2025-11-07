@@ -35,6 +35,7 @@ externalSecret:
     name: dev-secret-store
     kind: SecretStore
   data:
+    - key: general
     - key: observability-lab
       properties:
         - USERNAME
