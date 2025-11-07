@@ -29,6 +29,18 @@ keda:
 serviceMonitor:
   enabled: true
 
+externalSecret:
+  enabled: true
+  secretStore:
+    name: dev-secret-store
+    kind: SecretStore
+  data:
+    - key: observability-lab
+      properties:
+        - USERNAME
+        - PASSWORD
+        - API_KEY
+
 ingress:
   enabled: true
   hosts:
